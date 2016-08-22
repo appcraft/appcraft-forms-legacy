@@ -13,7 +13,7 @@ export class FieldContainer extends React.Component {
         ...style,
         display: width ? 'inline-block' : undefined,
         // paddingLeft: width ? '1em' : undefined,
-        paddingRight: width ? '1em' : undefined,
+        paddingRight: width && !horizontal ? '1em' : undefined,
         width  
       }}>
         <label className="c-label" htmlFor={id}>{label || name || id}</label>

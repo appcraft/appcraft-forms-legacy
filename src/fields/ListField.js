@@ -37,7 +37,7 @@ export class ListField extends React.Component {
   }
   
   render(){
-    const { fields, value=[], entryLabel="Entry" } = this.props
+    const { id, fields, value=[], entryLabel="Entry" } = this.props
     
     return (
       <FieldContainer {...this.props}>
@@ -45,6 +45,7 @@ export class ListField extends React.Component {
           <div key={idx} className="pb-list-item">
             <H3 size="small" style={{padding: '0.25em 0'}}>{entryLabel} {idx+1} {this.entryLabelFor(data)}</H3>
             <Fields name={idx} 
+                    prefix={`${id}[${idx}].`}
                     fields={fields} 
                     data={data} 
                     onChange={this.updateEntry} />
