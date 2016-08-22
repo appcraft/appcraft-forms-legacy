@@ -1,4 +1,5 @@
 export * from './DateField'
 export * from './NumberField'
 export * from './RichTextField'
+export * from './SelectField'
 export * from './StringField'

@@ -24,7 +24,7 @@ export class DateField extends Field {
     }
   }
   
-  showComponentUpdate(nextProps, nextState){
+  shouldComponentUpdate(nextProps, nextState){
     return shallowCompare(this, nextProps, nextState)
   }
 

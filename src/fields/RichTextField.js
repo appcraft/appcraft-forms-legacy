@@ -1,4 +1,6 @@
 import React from 'react'
+import shallowCompare from 'react-addons-shallow-compare'
+
 import { Field } from './Field'
 import RichTextEditor from 'react-rte';
 
@@ -10,6 +12,10 @@ export class RichTextField extends Field {
     this.state = {
       value: RichTextEditor.createEmptyValue()
     }
+  }
+  
+  shouldComponentUpdate(nextProps, nextState){
+    return shallowCompare(this, nextProps, nextState)
   }
 
   onChange = (value) => {

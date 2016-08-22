@@ -14,6 +14,11 @@ const fields = [
   {name: "number", label: "Number", type: "number"},
   {name: "date", label: "Date", type: "date"},
   {name: "richtext", label: "Rich Text", type: "richtext"},
+  {name: "choice", label: "Choice", type: "choice", options: [
+    {label: "Option 1", value: "1"},
+    {label: "Option 2", value: "2"},
+    {label: "Option 3", value: "3"},
+  ]},
 ]
 
 class Demo extends React.Component {

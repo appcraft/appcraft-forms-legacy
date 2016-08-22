@@ -1,17 +1,21 @@
 import React from 'react'
+import shallowCompare from 'react-addons-shallow-compare'
 
-class SelectField extends React.Component {
+import { Field } from './Field'
+import { FieldContainer } from '../components/FieldContainer'
+
+export class SelectField extends Field {
   
-  showComponentUpdate(nextProps, nextState){
+  shouldComponentUpdate(nextProps, nextState){
     return shallowCompare(this, nextProps, nextState)
   }
   
   render(){
-    const {name, value, options, onChange, type, autoFocus} = this.props
+    const {id, value, options} = this.props
     
     return (
       <FieldContainer {...this.props}>
-        <select value={value} onChange={(e) => onChange(name, e.target.value)}>
+        <select className="c-choice" id={id} value={value} onChange={this.onChange}>
           {options.map(o => <option key={o.value} value={o.value}>{o.label || o.value}</option>)}
         </select>
       </FieldContainer>

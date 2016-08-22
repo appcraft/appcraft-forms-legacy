@@ -11,7 +11,7 @@ export const fieldTypes = {
   "richtext": RichTextField,
   "number": NumberField,
   "date": DateField,
-  "select": SelectField,
+  "choice": SelectField,
   // "bool": BoolField,
   // "number": SliderField,
   // "integer": NumberInputField,
