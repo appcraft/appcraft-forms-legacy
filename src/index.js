@@ -1,9 +1,5 @@
 import React from 'react'
 
-export default React.createClass({
-  render() {
-    return <div>
-      <h2>Welcome to React components</h2>
-    </div>
-  }
-})
+export * from './fields'
+export * from './fieldTypes'
+export * from './Form'
