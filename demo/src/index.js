@@ -9,6 +9,7 @@ import 'blaze/dist/blaze.animations.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 
 const fields = [
+  {label: "Classic field types", type: "header"},
   {name: "string", label: "String", type: "text"},
   {name: "string_hint", label: "String with hint", type: "text", hint: "String hint is displayed when focused"},
   {name: "number", label: "Number", type: "number"},
@@ -18,6 +19,31 @@ const fields = [
     {label: "Option 1", value: "1"},
     {label: "Option 2", value: "2"},
     {label: "Option 3", value: "3"},
+  ]},
+  {label: "Other field types", type: "header"},
+  {name: "icon", label: "Icon", type: "icon"},
+  {name: "computed", label: "Computed", type: "computed", template: "String: {{string}}, Choice: {{choice}}"},
+
+  {label: "Tabs", type: "header"},
+  {type: "tabs", tabs: [
+    {title: "Tab 1", fields: [
+      {name: "other_string1", label: "Other string 1", type: "text"},
+      {name: "other_string2", label: "Other string 2", type: "text"},
+    ]},
+    {title: "Tab 2", fields: [
+      {name: "other_string3", label: "Other string 3", type: "text"},
+
+      {type: "tabs", tabs: [
+        {title: "Tab 1", fields: [
+          {name: "other_string5", label: "Tab in tab 1", type: "text"},
+          {name: "other_string6", label: "Tab in tab 2", type: "text"},
+        ]},
+        {title: "Tab 2", fields: [
+          {name: "other_string7", label: "Tab in tab 3", type: "text"},
+          {name: "other_string8", label: "Tab in tab 4", type: "text"},
+        ]},
+      ]},
+    ]},
   ]},
 ]
 

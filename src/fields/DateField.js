@@ -76,7 +76,7 @@ export class DateField extends Field {
         </div>
         {this.state.showCalendar && (
           <div className="c-card--highest"
-                style={{position: 'absolute', top: 0, right: 0, width: '100%', maxWidth: 400, marginTop: 38, zIndex: 10}}>
+                style={{position: 'absolute', top: 0, right: 0, width: '100%', maxWidth: 400, marginTop: 38, zIndex: 12}}>
             <InfiniteCalendar
                 width="100%"
                 height={360}

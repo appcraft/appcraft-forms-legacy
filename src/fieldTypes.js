@@ -1,5 +1,12 @@
+import {
+  FormHeader,
+  FormTabs,
+} from './components'
+
 import { 
+  ComputedField,
   DateField,
+  IconField,
   NumberField,
   RichTextField,
   SelectField,
@@ -7,16 +14,20 @@ import {
  } from './fields'
 
 export const fieldTypes = {
+  "header": FormHeader,
+  "tabs": FormTabs,
+
   "string": StringField,
   "richtext": RichTextField,
   "number": NumberField,
   "date": DateField,
   "choice": SelectField,
+  "computed": ComputedField,
+  "icon": IconField,
+  
   // "bool": BoolField,
-  // "number": SliderField,
   // "integer": NumberInputField,
   // "color": ColorField,
-  // "select": SelectField,
   // "multiselect": MultiSelectField,
   // "toggle": ToggleField,
   // "icon": IconField,
