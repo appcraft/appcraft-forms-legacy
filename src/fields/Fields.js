@@ -5,7 +5,6 @@ import { StringField } from './StringField'
 
 function getFieldComponent(fieldTypes, type){
   if (type in fieldTypes) return fieldTypes[type]
-  console.log("Unknown field type", type)
   return StringField
 }
 
@@ -24,7 +23,7 @@ export class Fields extends React.Component {
     acForms: React.PropTypes.object
   }
   
-  showComponentUpdate(nextProps, nextState){
+  shouldComponentUpdate(nextProps, nextState){
     return shallowCompare(this, nextProps, nextState)
   }
   
@@ -48,14 +47,14 @@ export class Fields extends React.Component {
       // if (type == "componentList") return undefined // TODO: remove
       
       const Component = getFieldComponent(this.context.acForms.fieldTypes, type)      
+      const key = name || field.label || (type + "-" + (idx+1))
       if (type === "computed" || type === "length" || type === "tabs"){
-        return <Component key={"field-" + name} 
+        return <Component key={"field-" + key} 
                           horizontal={horizontal}
                           {...field}
                           id={prefix + name}
                           data={data} />
       }
-      const key = name || field.label || (type + "-" + (idx+1))
       return <Component key={"field-" + key} 
                         horizontal={horizontal}
                         {...field}

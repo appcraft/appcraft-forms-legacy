@@ -27,6 +27,10 @@ const fields = [
     {name: "age", label: "Age", type: "number", width: '40%'},
     {name: "description", label: "Description", type: "richtext"},
   ]},
+  {name: "table", label: "Table", type: "table", fields: [
+    {name: "name", label: "Name", type: "string"},
+    {name: "age", label: "Age", type: "number"},
+  ]},
 
   {name: "address", label: "Full Address", type: "address"},
   {name: "street number", type: "string", width: "30%"},

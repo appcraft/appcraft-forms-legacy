@@ -1,9 +1,14 @@
 import React from 'react'
+import shallowCompare from 'react-addons-shallow-compare'
 
 import { FieldContainer } from '../components/FieldContainer'
 
 export class AddressField extends React.Component {
   
+  shouldComponentUpdate(nextProps, nextState){
+    return shallowCompare(this, nextProps, nextState)
+  }
+
   handleValidate = () => {
     var place = this.autocomplete.getPlace();
     console.log("place.address_components", place.address_components)

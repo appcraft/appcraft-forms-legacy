@@ -13,6 +13,7 @@ import {
   RichTextField,
   SelectField,
   StringField,
+  TableField,
  } from './fields'
 
 export const fieldTypes = {
@@ -29,6 +30,7 @@ export const fieldTypes = {
   "address": AddressField,
 
   "list": ListField,
+  "table": TableField,
   
   // "bool": BoolField,
   // "integer": NumberInputField,

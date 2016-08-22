@@ -1,4 +1,6 @@
 import React from 'react'
+import shallowCompare from 'react-addons-shallow-compare'
+
 import { FieldContainer } from '../components/FieldContainer'
 import { Fields } from './Fields'
 
@@ -26,7 +28,7 @@ export class ListField extends React.Component {
     }
   }
   
-  showComponentUpdate(nextProps, nextState){
+  shouldComponentUpdate(nextProps, nextState){
     return shallowCompare(this, nextProps, nextState)
   }
   
