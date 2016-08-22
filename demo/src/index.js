@@ -20,6 +20,14 @@ const fields = [
     {label: "Option 2", value: "2"},
     {label: "Option 3", value: "3"},
   ]},
+
+  {label: "Complex field types", type: "header"},
+  {name: "list", label: "List", type: "list", fields: [
+    {name: "name", label: "Name", type: "text", width: '60%'},
+    {name: "age", label: "Age", type: "number", width: '40%'},
+    {name: "description", label: "Description", type: "richtext"},
+  ]},
+
   {label: "Other field types", type: "header"},
   {name: "icon", label: "Icon", type: "icon"},
   {name: "computed", label: "Computed", type: "computed", template: "String: {{string}}, Choice: {{choice}}"},
@@ -34,11 +42,11 @@ const fields = [
       {name: "other_string3", label: "Other string 3", type: "text"},
 
       {type: "tabs", tabs: [
-        {title: "Tab 1", fields: [
+        {title: "Other Tab 1", fields: [
           {name: "other_string5", label: "Tab in tab 1", type: "text"},
           {name: "other_string6", label: "Tab in tab 2", type: "text"},
         ]},
-        {title: "Tab 2", fields: [
+        {title: "Other Tab 2", fields: [
           {name: "other_string7", label: "Tab in tab 3", type: "text"},
           {name: "other_string8", label: "Tab in tab 4", type: "text"},
         ]},
@@ -56,12 +64,12 @@ class Demo extends React.Component {
       data: {}
     }
 
-    this.onChange = (data, name, value) => {
-      console.log("onChange", data, name, value)
+    this.onChange = (formName, fieldName, value) => {
+      console.log("onChange", formName, fieldName, value)
       this.setState({
         data: {
-          ...data,
-          [name]: value
+          ...this.state.data,
+          [fieldName]: value
         }
       })
     }

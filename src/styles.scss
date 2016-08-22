@@ -17,7 +17,7 @@
   width: 100%;
 
   @media (min-width:30em) {
-    .c-label, .c-label:first-child {
+    >.c-label, >.c-label:first-child {
       display: inline-block;
       width: 10em;
       text-align: right;

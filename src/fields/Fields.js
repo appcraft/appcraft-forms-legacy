@@ -13,9 +13,9 @@ export class Fields extends React.Component {
   constructor(props){
     super(props)
     
-    this.updateField = (name, value) => {
-      const { data, onChange } = this.props
-      onChange(data, name, value)
+    this.updateField = (fieldName, value) => {
+      const { name, onChange } = this.props
+      onChange(name, fieldName, value)
     }
   }
 

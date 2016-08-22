@@ -7,6 +7,7 @@ import {
   ComputedField,
   DateField,
   IconField,
+  ListField,
   NumberField,
   RichTextField,
   SelectField,
@@ -24,6 +25,8 @@ export const fieldTypes = {
   "choice": SelectField,
   "computed": ComputedField,
   "icon": IconField,
+
+  "list": ListField,
   
   // "bool": BoolField,
   // "integer": NumberInputField,
