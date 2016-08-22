@@ -5,11 +5,12 @@ import { fieldTypes, Form } from '../../src'
 
 import { H1 } from 'react-blazecss'
 import 'blaze/dist/blaze.min.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 const fields = [
-  {name: "string", label: "String"},
-  {name: "string2", label: "String"},
-  {name: "string3", label: "String"},
+  {name: "string", label: "String", type: "text"},
+  {name: "number", label: "Number", type: "number"},
+  {name: "date", label: "Date", type: "date"},
   {name: "string4", label: "String"}
 ]
 

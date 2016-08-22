@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field } from './Field'
 
-export class StringField extends Field {
+export class NumberField extends Field {
 
   render(){
     const { id, name, label, hint, placeholder, value="", horizontal } = this.props
@@ -14,7 +14,7 @@ export class StringField extends Field {
         <label className="c-label" htmlFor={id}>{label || name || id}</label>
         <input id={id} 
                className="c-field" 
-               type="text"
+               type="number"
                placeholder={placeholder} 
                onChange={this.onChange}
                value={value} />

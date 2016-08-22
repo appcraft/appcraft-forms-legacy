@@ -20,7 +20,10 @@
     "test:watch": "nwb test --server"
   },
   "dependencies": {
-    "react-blazecss": "^0.4.0"
+    "font-awesome": "^4.6.3",
+    "react-blazecss": "^0.4.0",
+    "react-infinite-calendar": "^1.1.18",
+    "react-text-mask": "^0.17.3"
   },
   "peerDependencies": {
     "react": "15.x"
