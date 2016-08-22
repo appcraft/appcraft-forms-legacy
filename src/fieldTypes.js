@@ -1,14 +1,15 @@
 import { 
   DateField,
   NumberField,
+  RichTextField,
   StringField,
  } from './fields'
 
 export const fieldTypes = {
   "string": StringField,
+  "richtext": RichTextField,
   "number": NumberField,
   "date": DateField,
-  // "richtext": RichTextField,
   // "bool": BoolField,
   // "number": SliderField,
   // "integer": NumberInputField,

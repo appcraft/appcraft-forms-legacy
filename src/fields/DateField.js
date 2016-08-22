@@ -72,7 +72,7 @@ export class DateField extends Field {
                   type="text"
                   placeholder={"01/01/1970"} 
                   value={value} />
-            <IconButton icon="calendar" onClick={this.toggleCalendar}/>
+            <IconButton icon="calendar" onClick={this.toggleCalendar} bStyle="primary"/>
           </div>
           {this.state.showCalendar && (
             <div className="c-card--highest"

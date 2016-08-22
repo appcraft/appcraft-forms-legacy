@@ -23,6 +23,7 @@
     "font-awesome": "^4.6.3",
     "react-blazecss": "^0.4.0",
     "react-infinite-calendar": "^1.1.18",
+    "react-rte": "^0.5.0",
     "react-text-mask": "^0.17.3"
   },
   "peerDependencies": {

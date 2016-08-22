@@ -5,13 +5,15 @@ import { fieldTypes, Form } from '../../src'
 
 import { H1 } from 'react-blazecss'
 import 'blaze/dist/blaze.min.css'
+import 'blaze/dist/blaze.animations.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 
 const fields = [
   {name: "string", label: "String", type: "text"},
+  {name: "string_hint", label: "String with hint", type: "text", hint: "String hint is displayed when focused"},
   {name: "number", label: "Number", type: "number"},
   {name: "date", label: "Date", type: "date"},
-  {name: "string4", label: "String"}
+  {name: "richtext", label: "Rich Text", type: "richtext"},
 ]
 
 class Demo extends React.Component {

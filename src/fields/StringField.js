@@ -12,13 +12,15 @@ export class StringField extends Field {
     return (
       <div className={classNames}>
         <label className="c-label" htmlFor={id}>{label || name || id}</label>
-        <input id={id} 
-               className="c-field" 
-               type="text"
-               placeholder={placeholder} 
-               onChange={this.onChange}
-               value={value} />
-        {hint && <div class="c-hint a-hint">{hint}</div>}
+        <div className="c-label-field-group">
+          <input id={id} 
+                className="c-field" 
+                type="text"
+                placeholder={placeholder} 
+                onChange={this.onChange}
+                value={value} />
+          {hint && <div className="c-hint a-hint">{hint}</div>}
+        </div>
       </div>
     )
   }
