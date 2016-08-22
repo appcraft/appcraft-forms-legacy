@@ -2,9 +2,9 @@ import React from 'react'
 
 import { FieldContainer } from '../components/FieldContainer'
 
-class AddressField extends React.Component {
+export class AddressField extends React.Component {
   
-  handleValidate = () {
+  handleValidate = () => {
     var place = this.autocomplete.getPlace();
     console.log("place.address_components", place.address_components)
 
@@ -39,6 +39,7 @@ class AddressField extends React.Component {
   }
 
   initGoogleMaps(){
+    console.log("initGoogleMaps")
     this.autocomplete = new window.google.maps.places.Autocomplete(
       /** @type {!HTMLInputElement} */(this.refs.autocomplete),
       {types: ['geocode']});
@@ -47,14 +48,16 @@ class AddressField extends React.Component {
   }
   
   componentDidMount(){
+    this._isMounted = true
     if (window.google){
       this.initGoogleMaps()
     } else {
+      console.log("Load script")
       const script = document.createElement('script') 
       script.type = "text/javascript"
       script.async = true
       script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDoiPcdpyW_0MtTEJF7O-T4m9ksQrYLRt0&signed_in=true&libraries=places"
-      script.onload = function(){
+      script.onload = () => {
         if (this._isMounted) this.initGoogleMaps()
       }
       document.getElementsByTagName('head')[0].appendChild(script);
@@ -62,6 +65,7 @@ class AddressField extends React.Component {
   }
   
   componentWillUnmount(){
+    this._isMounted = false
     if (this.listener) {
       this.listener.remove()
       this.listener = null
@@ -69,11 +73,10 @@ class AddressField extends React.Component {
   }
   
   render(){
+    console.log("render address")
     return (
       <FieldContainer {...this.props}>
-        <div className="c-field">
-          <input ref="autocomplete" type="search" style={{width: '100%'}} />
-        </div>
+          <input className="c-field" ref="autocomplete" type="search" />
       </FieldContainer>
     )
   }

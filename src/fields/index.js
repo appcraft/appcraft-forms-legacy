@@ -1,3 +1,4 @@
+export * from './AddressField'
 export * from './ComputedField'
 export * from './DateField'
 export * from './IconField'

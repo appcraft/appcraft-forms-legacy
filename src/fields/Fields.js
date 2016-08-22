@@ -5,6 +5,7 @@ import { StringField } from './StringField'
 
 function getFieldComponent(fieldTypes, type){
   if (type in fieldTypes) return fieldTypes[type]
+  console.log("Unknown field type", type)
   return StringField
 }
 
@@ -49,15 +50,15 @@ export class Fields extends React.Component {
       const Component = getFieldComponent(this.context.acForms.fieldTypes, type)      
       if (type === "computed" || type === "length" || type === "tabs"){
         return <Component key={"field-" + name} 
-                          {...field}
                           horizontal={horizontal}
+                          {...field}
                           id={prefix + name}
                           data={data} />
       }
       const key = name || field.label || (type + "-" + (idx+1))
       return <Component key={"field-" + key} 
-                        {...field}
                         horizontal={horizontal}
+                        {...field}
                         id={prefix + key}
                         onChange={this.updateField} 
                         value={data[name]} />

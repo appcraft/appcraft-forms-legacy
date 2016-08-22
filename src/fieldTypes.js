@@ -4,6 +4,7 @@ import {
 } from './components'
 
 import { 
+  AddressField,
   ComputedField,
   DateField,
   IconField,
@@ -25,6 +26,7 @@ export const fieldTypes = {
   "choice": SelectField,
   "computed": ComputedField,
   "icon": IconField,
+  "address": AddressField,
 
   "list": ListField,
   
