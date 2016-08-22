@@ -36,7 +36,8 @@
     "nwb-sass": "^0.6.0",
     "react": "^15.3.1",
     "react-addons-shallow-compare": "^15.3.1",
-    "react-dom": "^15.3.1"
+    "react-dom": "^15.3.1",
+    "react-select": "^1.0.0-beta14"
   },
   "author": "",
   "homepage": "",

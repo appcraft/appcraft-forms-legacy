@@ -2,6 +2,7 @@ import React from 'react'
 import { Field } from './Field'
 import MaskedInput from 'react-text-mask'
 import { IconButton } from '../components/IconButton'
+import { FieldContainer } from '../components/FieldContainer'
 import moment from 'moment'
 import shallowCompare from 'react-addons-shallow-compare'
 
@@ -60,35 +61,32 @@ export class DateField extends Field {
     console.log("parseDate", this.parseDate())
 
     return (
-      <div className={classNames}>
-        <label className="c-label" htmlFor={id}>{label || name || id}</label>
-        <div className="c-label-field-group">
-          <div className="c-input-group">
-            <MaskedInput id={id} 
-                  className="c-field" 
-                  guide={false}
-                  mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
-                  onChange={this.onChange}
-                  type="text"
-                  placeholder={"01/01/1970"} 
-                  value={value} />
-            <IconButton icon="calendar" onClick={this.toggleCalendar} bStyle="primary"/>
-          </div>
-          {this.state.showCalendar && (
-            <div className="c-card--highest"
-                 style={{position: 'absolute', top: 0, right: 0, width: '100%', maxWidth: 400, marginTop: 38, zIndex: 10}}>
-              <InfiniteCalendar
-                  width="100%"
-                  height={360}
-                  selectedDate={this.parseDate()}
-                  keyboardSupport={true}
-                  afterSelect={this.handleCalendarSelect}
-                />
-            </div>
-          )}
+      <FieldContainer {...this.props}>
+        <div className="c-input-group">
+          <MaskedInput id={id} 
+                className="c-field" 
+                guide={false}
+                mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+                onChange={this.onChange}
+                type="text"
+                placeholder={"01/01/1970"} 
+                value={value} />
+          {hint && <div class="c-hint a-hint">{hint}</div>}
+          <IconButton icon="calendar" onClick={this.toggleCalendar} bStyle="primary"/>
         </div>
-        {hint && <div class="c-hint a-hint">{hint}</div>}
-      </div>
+        {this.state.showCalendar && (
+          <div className="c-card--highest"
+                style={{position: 'absolute', top: 0, right: 0, width: '100%', maxWidth: 400, marginTop: 38, zIndex: 10}}>
+            <InfiniteCalendar
+                width="100%"
+                height={360}
+                selectedDate={this.parseDate()}
+                keyboardSupport={true}
+                afterSelect={this.handleCalendarSelect}
+              />
+          </div>
+        )}
+      </FieldContainer>
     )
   }
 }

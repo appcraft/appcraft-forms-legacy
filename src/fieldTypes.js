@@ -2,6 +2,7 @@ import {
   DateField,
   NumberField,
   RichTextField,
+  SelectField,
   StringField,
  } from './fields'
 
@@ -10,6 +11,7 @@ export const fieldTypes = {
   "richtext": RichTextField,
   "number": NumberField,
   "date": DateField,
+  "select": SelectField,
   // "bool": BoolField,
   // "number": SliderField,
   // "integer": NumberInputField,
