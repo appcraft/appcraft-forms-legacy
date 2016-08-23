@@ -1,7 +1,10 @@
 import React from 'react'
 import shallowCompare from 'react-addons-shallow-compare'
 
+import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
+
 import { IconButton } from '../components/IconButton'
+import { Icon } from '../components/Icon'
 import { FieldContainer } from '../components/FieldContainer'
 import { ButtonGroup, Button } from 'react-blazecss'
 
@@ -12,6 +15,10 @@ function getFieldComponent(fieldTypes, type){
   if (type in fieldTypes) return fieldTypes[type]
   return StringField
 }
+
+const DragHandle = SortableHandle(() => (
+  <Icon name="bars" style={{color: '#BBB', float: 'left', padding: 4, cursor: 'move'}} />
+));
 
 export class RowFields extends React.Component {
 
@@ -28,6 +35,11 @@ export class RowFields extends React.Component {
       const { index, onDelete } = this.props
       onDelete(index)
     }
+    this.handleEdit = (e) => {
+      e.preventDefault()
+      const { index, onEdit } = this.props
+      onEdit(index)
+    }
   }
 
   static contextTypes = {
@@ -40,19 +52,37 @@ export class RowFields extends React.Component {
   
   render(){
 
-    const { index, isExtra } = this.props
+    const { index, isExtra, fields, hasEdit } = this.props
+    // const hasEdit = visibleFields && (visibleFields.length != fields.length)
     return (
-      <tr style={{opacity: (isExtra ? 0.5 : undefined)}} >
-        <td style={{textAlign: 'right'}}>{isExtra ? '' : (index+1)}</td>
+      <tr className="ac-fields-table__row" style={{opacity: (isExtra ? 0.5 : undefined)}} >
+        <td style={{textAlign: 'right', paddingLeft: 4}}>{isExtra ? '' : <span><DragHandle /> {index+1}</span>}</td>
         {this.renderFields()}
-        <td style={{textAlign: 'right'}}>{isExtra ? '' : (
-          <ButtonGroup ghost size="small">
-            <IconButton icon="pencil" bStyle="secondary" />
-            <IconButton icon="trash" bStyle="error" onClick={this.handleDelete} />
-          </ButtonGroup>
-        )}</td>
+        <td style={{textAlign: 'right'}}>
+          {this.renderButtons()}
+        </td>
       </tr>
     )
+  }
+
+  renderButtons(){
+    const { isExtra, hasEdit } = this.props
+    if (isExtra) return null
+    
+    if (hasEdit) {
+      return (
+        <ButtonGroup ghost size="small">
+          <IconButton icon="pencil" bStyle="secondary" onClick={this.handleEdit} />
+          <IconButton icon="trash" bStyle="error" onClick={this.handleDelete} />
+        </ButtonGroup>
+      )
+    } else {
+      return (
+        <ButtonGroup ghost size="small">
+          <IconButton icon="trash" bStyle="error" onClick={this.handleDelete} />
+        </ButtonGroup>
+      )
+    }
   }
   
   renderFields(){
@@ -90,6 +120,42 @@ export class RowFields extends React.Component {
   }
 }
 
+const SortableRowField = SortableElement(props => <RowFields {...props} />);
+
+const SortableTableBody = SortableContainer(class TableFieldBody extends React.Component {
+  render(){
+    const { id, fields, value, onChange, onDelete, onEdit, hasEdit } = this.props
+    const rows = value.map((data, idx) => (
+      <SortableRowField key={idx} 
+                  index={idx} 
+                  name={idx} 
+                  prefix={`${id}[${idx}].`}
+                  fields={fields} 
+                  hasEdit={hasEdit}
+                  data={data}
+                  onChange={onChange}
+                  onDelete={onDelete}
+                  onEdit={onEdit}  />
+    ))
+    
+    // Extra greyed out one to add rows
+    rows.push(
+      <RowFields key={value.length} 
+                  index={value.length}
+                  name={value.length}
+                  prefix={`${id}[${value.length}].`}
+                  isExtra 
+                  fields={fields}
+                  onChange={onChange} />
+    )
+
+    return (
+      <tbody>
+        {rows}
+      </tbody>
+    )
+  }
+})
 
 export class TableField extends React.Component {
   constructor(props){
@@ -97,10 +163,9 @@ export class TableField extends React.Component {
 
     this.updateEntry = this.updateEntry.bind(this)
     this.deleteEntry = this.deleteEntry.bind(this)
+    this.onSortEnd = this.onSortEnd.bind(this)
   }
   
-
-    
   updateEntry(idx, fieldName, fieldValue) {
     const { value=[], data, name, onChange } = this.props
   
@@ -123,58 +188,54 @@ export class TableField extends React.Component {
     const array = [...value]
     array.splice(idx, 1)
     onChange(name, array)
+  }  
+
+  onSortEnd({oldIndex, newIndex}) {
+      const {value, name, onChange} = this.props;
+      onChange(name, arrayMove(value, oldIndex, newIndex))
   }
 
   shouldComponentUpdate(nextProps, nextState){
     return shallowCompare(this, nextProps, nextState)
   }
-  
-  entryLabelFor(data){
-    const label = data.label || data.title || data.name
-    if (label) return " - " + label
-    return ""
-  }
+
+  fieldsToRender(){
+    const { fields, visibleFields } = this.props
+    if (!visibleFields) return fields
+
+    return visibleFields.map((name) => fields.find(f => f.name === name))
+  }  
   
   render(){
-    const { id, fields, value=[], entryLabel="Entry" } = this.props
-    
-    let rows = value.map((data, idx) => (
-      <RowFields key={idx} 
-                  index={idx} 
-                  name={idx} 
-                  prefix={`${id}[${idx}].`}
-                  fields={fields} 
-                  data={data} 
-                  onChange={this.updateEntry}
-                  onDelete={this.deleteEntry} />
-    ))
-    
-    // Extra greyed out one to add rows
-    rows.push(
-      <RowFields key={value.length} 
-                  index={value.length}
-                  name={value.length}
-                  prefix={`${id}[${value.length}].`}
-                  isExtra 
-                  fields={fields}
-                  onChange={this.updateEntry} />
-    )
+    const { id, fields, visibleFields, value=[], entryLabel="Entry" } = this.props
+
+    const hasEdit = visibleFields && visibleFields.length != fields.length
+    const actionWidth = hasEdit ? 100 : 68
+    const rowFields = this.fieldsToRender()
     
     return (
       <FieldContainer {...this.props}>
         <table className="ac-fields-table" style={{width: '100%'}}>
           <thead>
-            <tr>
-              <th style={{width: 60, textAlign: 'right'}}>#</th>
-              {fields.map((field, idx) => (
+            <tr className="ac-fields-table__row" >
+              <th style={{width: 90, textAlign: 'right'}}>#</th>
+              {rowFields.map((field, idx) => (
                 <th key={idx+1} style={{width: field.width}}>{field.label}</th>
               ))}
-              <th style={{width: 100}} />
+              <th style={{width: actionWidth}} />
             </tr>
           </thead>
-          <tbody>
-            {rows}
-          </tbody>
+          <SortableTableBody id={id}  
+                             fields={rowFields} 
+                             onSortEnd={this.onSortEnd}
+                             hasEdit={hasEdit} 
+                             value={value}
+                             onChange={this.updateEntry}
+                             onDelete={this.deleteEntry}
+                             onEdit={this.editEntry}
+                             useDragHandle={true}
+                             lockToContainerEdges={true}
+                              />
         </table>
       </FieldContainer>
     )

@@ -45,6 +45,20 @@ const fields = [
   {name: "region", type: "string", width: "35%"},
   {name: "country", type: "string", width: "35%"},
 
+  {label: "Table field with hidden columns", type: "header"},
+  {name: "table-hidden", label: "Table with edit", type: "table", visibleFields: ["name", "age"], fields: [
+    {name: "name", label: "Name", type: "string"},
+    {name: "age", label: "Age", type: "number"},
+    {name: "sex", label: "Sex", type: "choice", options: [
+      {label: "Male", value: "male"},
+      {label: "Female", value: "female"},
+    ]},
+    {name: "children", label: "Children", type: "table", fields: [
+      {name: "name", label: "Name", type: "string"},
+      {name: "age", label: "Age", type: "number"},
+    ]},
+  ]},
+
   {label: "Other field types", type: "header"},
   {name: "icon", label: "Icon", type: "icon"},
   {name: "computed", label: "Computed", type: "computed", template: "String: {{string}}, Choice: {{choice}}"},

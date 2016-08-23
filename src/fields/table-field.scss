@@ -6,7 +6,20 @@
   border: 1px solid #cbcbcb;
   table-layout: fixed;
 
-  >thead>tr>th, >tbody>tr>td { 
+  >thead {
+    background-color: #e0e0e0;
+    color: #000;
+    text-align: left;
+    vertical-align: bottom;
+  }
+
+  >tbody {
+
+  }
+}
+
+.ac-fields-table__row {
+  >th, >td { 
     border-left: 1px solid #cbcbcb;
     border-width: 0 0 0 1px;
     font-size: inherit;
@@ -22,36 +35,22 @@
     }
   }
 
-  >thead {
-    background-color: #e0e0e0;
-    color: #000;
-    text-align: left;
-    vertical-align: bottom;
+  >td {
+    background-color: #fff;
 
-    >tr {
+    .c-field {
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      border-radius: 0;
+      background-color: transparent;
+
+      &:focus {
+        box-shadow: none;
+      }
     }
   }
-
-  >tbody {
-    >tr {
-      >td {
-        background-color: transparent;
-
-        .c-field {
-          border-left: 0;
-          border-right: 0;
-          border-top: 0;
-          border-radius: 0;
-          background-color: transparent;
-
-          &:focus {
-            box-shadow: none;
-          }
-        }
-      }
-      &:nth-child(2n-1)>td {
-          background-color: #f2f2f2;
-      }
-    }
+  &:nth-child(2n-1)>td {
+      background-color: #f2f2f2;
   }
 }
