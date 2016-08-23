@@ -120,3 +120,6 @@ class Demo extends React.Component {
   } 
 }
 render(<Demo/>, document.querySelector('#demo'))
+
+
+document.getElementsByTagName("body")[0].className = "c-text"

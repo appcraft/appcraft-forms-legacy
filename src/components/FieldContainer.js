@@ -6,7 +6,7 @@ export class FieldContainer extends React.Component {
 
     if (noContainer){
       return (
-        <div>
+        <div style={{width: '100%'}}>
           {children}
         </div>
       )

@@ -7,6 +7,7 @@ import { IconButton } from '../components/IconButton'
 import { Icon } from '../components/Icon'
 import { FieldContainer } from '../components/FieldContainer'
 import { ButtonGroup, Button } from 'react-blazecss'
+import { Table, TBody, THead, TR, TH, TD } from 'react-blazecss'
 
 import { StringField } from './StringField'
 import './table-field.scss'
@@ -53,15 +54,18 @@ export class RowFields extends React.Component {
   render(){
 
     const { index, isExtra, fields, hasEdit } = this.props
+    const width = hasEdit ? 90 : 60
     // const hasEdit = visibleFields && (visibleFields.length != fields.length)
     return (
-      <tr className="ac-fields-table__row" style={{opacity: (isExtra ? 0.5 : undefined)}} >
-        <td style={{textAlign: 'right', paddingLeft: 4}}>{isExtra ? '' : <span><DragHandle /> {index+1}</span>}</td>
+      <TR style={{opacity: (isExtra ? 0.5 : undefined)}} >
+        <TD style={{textAlign: 'right', paddingLeft: 4, width: 90, maxWidth: 90, paddingTop: '0.75em'}}>
+          {isExtra ? '' : <span style={{width: '100%'}}><DragHandle /> {index+1}</span>}
+        </TD>
         {this.renderFields()}
-        <td style={{textAlign: 'right'}}>
+        <TD style={{textAlign: 'right', width, maxWidth: width}}>
           {this.renderButtons()}
-        </td>
-      </tr>
+        </TD>
+      </TR>
     )
   }
 
@@ -97,24 +101,24 @@ export class RowFields extends React.Component {
       const Component = getFieldComponent(this.context.acForms.fieldTypes, type)      
       if (type === "computed" || type === "length" || type === "tabs"){
         return (
-          <td key={"field-" + key}>
+          <TD key={"field-" + key}>
             <Component  horizontal={horizontal}
                         {...field}
                         id={prefix + name}
                         noContainer={true}
                         data={data} />
-          </td>
+          </TD>
         )
       }
       return (
-        <td key={"field-" + key} >
+        <TD key={"field-" + key} >
           <Component horizontal={horizontal}
                       {...field}
                       id={prefix + key}
                       noContainer={true}
                       onChange={this.updateField} 
                       value={data[name]} />
-        </td>
+        </TD>
       )
     })
   }
@@ -140,19 +144,21 @@ const SortableTableBody = SortableContainer(class TableFieldBody extends React.C
     
     // Extra greyed out one to add rows
     rows.push(
-      <RowFields key={value.length} 
+      <SortableRowField key={value.length} 
+                  disabled={true}
                   index={value.length}
                   name={value.length}
                   prefix={`${id}[${value.length}].`}
                   isExtra 
+                  hasEdit={hasEdit}
                   fields={fields}
                   onChange={onChange} />
     )
 
     return (
-      <tbody>
+      <TBody>
         {rows}
-      </tbody>
+      </TBody>
     )
   }
 })
@@ -210,21 +216,21 @@ export class TableField extends React.Component {
     const { id, fields, visibleFields, value=[], entryLabel="Entry" } = this.props
 
     const hasEdit = visibleFields && visibleFields.length != fields.length
-    const actionWidth = hasEdit ? 100 : 68
+    const actionWidth = hasEdit ? 90 : 60
     const rowFields = this.fieldsToRender()
     
     return (
       <FieldContainer {...this.props}>
-        <table className="ac-fields-table" style={{width: '100%'}}>
-          <thead>
-            <tr className="ac-fields-table__row" >
-              <th style={{width: 90, textAlign: 'right'}}>#</th>
+        <Table striped style={{width: '100%', border: '1px solid #CCC'}}>
+          <THead>
+            <TR heading>
+              <TH style={{width: 90, maxWidth: 90, textAlign: 'right'}}>#</TH>
               {rowFields.map((field, idx) => (
-                <th key={idx+1} style={{width: field.width}}>{field.label}</th>
+                <TH key={idx+1} style={{width: field.width}}>{field.label}</TH>
               ))}
-              <th style={{width: actionWidth}} />
-            </tr>
-          </thead>
+              <TH style={{width: actionWidth, maxWidth: actionWidth}} />
+            </TR>
+          </THead>
           <SortableTableBody id={id}  
                              fields={rowFields} 
                              onSortEnd={this.onSortEnd}
@@ -233,10 +239,11 @@ export class TableField extends React.Component {
                              onChange={this.updateEntry}
                              onDelete={this.deleteEntry}
                              onEdit={this.editEntry}
-                             useDragHandle={true}
-                             lockToContainerEdges={true}
+                             useDragHandle
+                             lockAxis="y"
+                             lockToContainerEdges
                               />
-        </table>
+        </Table>
       </FieldContainer>
     )
   }
