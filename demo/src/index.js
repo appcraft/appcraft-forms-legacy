@@ -30,6 +30,10 @@ const fields = [
   {name: "table", label: "Table", type: "table", fields: [
     {name: "name", label: "Name", type: "string"},
     {name: "age", label: "Age", type: "number"},
+    {name: "sex", label: "Sex", type: "choice", options: [
+      {label: "Male", value: "male"},
+      {label: "Female", value: "female"},
+    ]},
   ]},
 
   {name: "address", label: "Full Address", type: "address"},

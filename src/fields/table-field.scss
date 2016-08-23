@@ -1,0 +1,57 @@
+
+.ac-fields-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #cbcbcb;
+  table-layout: fixed;
+
+  >thead>tr>th, >tbody>tr>td { 
+    border-left: 1px solid #cbcbcb;
+    border-width: 0 0 0 1px;
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    padding: .5em 1em;
+
+    &:first-child {
+      border-left-width: 0;
+    }
+    &:last-child {
+      border-right-width: 0;
+    }
+  }
+
+  >thead {
+    background-color: #e0e0e0;
+    color: #000;
+    text-align: left;
+    vertical-align: bottom;
+
+    >tr {
+    }
+  }
+
+  >tbody {
+    >tr {
+      >td {
+        background-color: transparent;
+
+        .c-field {
+          border-left: 0;
+          border-right: 0;
+          border-top: 0;
+          border-radius: 0;
+          background-color: transparent;
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+      }
+      &:nth-child(2n-1)>td {
+          background-color: #f2f2f2;
+      }
+    }
+  }
+}
