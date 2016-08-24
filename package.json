@@ -1,6 +1,6 @@
 {
   "name": "appcraft-forms",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "appcraft-forms React component",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
@@ -39,6 +39,7 @@
     "react": "^15.3.1",
     "react-addons-shallow-compare": "^15.3.1",
     "react-dom": "^15.3.1",
+    "react-portal": "^2.2.1",
     "react-select": "^1.0.0-beta14"
   },
   "author": "",

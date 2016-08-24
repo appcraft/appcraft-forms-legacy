@@ -21,7 +21,7 @@ export class Form extends React.Component {
     var className = "c-form"
 
     return (
-      <form className={className} style={{color: "#333"}}>
+      <form className={className} style={{color: "#333", fontSize: '1em'}}>
         <Fields {...this.props} horizontal/>
       </form>
     )

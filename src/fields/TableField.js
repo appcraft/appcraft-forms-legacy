@@ -10,6 +10,9 @@ import { ButtonGroup, Button } from 'react-blazecss'
 import { Table, TBody, THead, TR, TH, TD } from 'react-blazecss'
 
 import { StringField } from './StringField'
+import { ModalForm } from './ModalForm'
+import { Modal } from '../components/Modal'
+import Portal from 'react-portal'
 import './table-field.scss'
 
 function getFieldComponent(fieldTypes, type){
@@ -73,20 +76,12 @@ export class RowFields extends React.Component {
     const { isExtra, hasEdit } = this.props
     if (isExtra) return null
     
-    if (hasEdit) {
-      return (
-        <ButtonGroup ghost size="small">
-          <IconButton span icon="pencil" bStyle="secondary" onClick={this.handleEdit} />
-          <IconButton span icon="trash" bStyle="error" onClick={this.handleDelete} />
-        </ButtonGroup>
-      )
-    } else {
-      return (
-        <ButtonGroup ghost size="small">
-          <IconButton span icon="trash" bStyle="error" onClick={this.handleDelete} />
-        </ButtonGroup>
-      )
-    }
+    return (
+      <ButtonGroup ghost size="small">
+        {hasEdit && <IconButton span icon="pencil" bStyle="secondary" onClick={this.handleEdit} />}
+        <IconButton span icon="trash" bStyle="error" onClick={this.handleDelete} />
+      </ButtonGroup>
+    )
   }
   
   renderFields(){
@@ -167,8 +162,14 @@ export class TableField extends React.Component {
   constructor(props){
     super(props)
 
+    this.state = {
+      showEditPopup: false,
+      currentIndex: false
+    }
+
     this.updateEntry = this.updateEntry.bind(this)
     this.deleteEntry = this.deleteEntry.bind(this)
+    this.editEntry = this.editEntry.bind(this)
     this.onSortEnd = this.onSortEnd.bind(this)
   }
   
@@ -196,6 +197,14 @@ export class TableField extends React.Component {
     onChange(name, array)
   }  
 
+  editEntry(idx) {
+    console.log("edit", idx)
+    this.setState({
+      showEditPopup: true,
+      currentIndex: idx
+    })
+  }  
+
   onSortEnd({oldIndex, newIndex}) {
       const {value, name, onChange} = this.props;
       onChange(name, arrayMove(value, oldIndex, newIndex))
@@ -219,6 +228,8 @@ export class TableField extends React.Component {
     const actionWidth = hasEdit ? 90 : 60
     const rowFields = this.fieldsToRender()
     
+    console.log("this.state.showEditPopup", this.state.showEditPopup)
+
     return (
       <FieldContainer {...this.props}>
         <Table striped style={{width: '100%', border: '1px solid #CCC'}}>
@@ -244,6 +255,10 @@ export class TableField extends React.Component {
                              lockToContainerEdges
                               />
         </Table>
+        {hasEdit && <Portal isOpened={this.state.showEditPopup}>
+            <ModalForm onClose={() => this.setState({showEditPopup: false})}/>
+          </Portal>
+        }
       </FieldContainer>
     )
   }
