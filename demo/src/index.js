@@ -13,6 +13,8 @@ const fields = [
   {name: "string", label: "String", type: "string"},
   {name: "string_hint", label: "String with hint", type: "string", hint: "String hint is displayed when focused"},
   {name: "number", label: "Number", type: "number"},
+  {name: "boolean", label: "Boolean (with hint)", type: "boolean", bStyle: "primary", hint: "Tap to toggle"},
+  {name: "checkbox", label: "Boolean (subtype:'checkbox')", type: "boolean", subtype: "checkbox"},
   {name: "date", label: "Date", type: "date"},
   {name: "richtext", label: "Rich Text", type: "richtext"},
   {name: "choice", label: "Choice", type: "choice", options: [

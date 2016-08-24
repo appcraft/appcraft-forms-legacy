@@ -5,6 +5,7 @@ import {
 
 import { 
   AddressField,
+  BooleanField,
   ComputedField,
   DateField,
   IconField,
@@ -21,6 +22,7 @@ export const fieldTypes = {
   "tabs": FormTabs,
 
   "string": StringField,
+  "boolean": BooleanField,
   "richtext": RichTextField,
   "number": NumberField,
   "date": DateField,

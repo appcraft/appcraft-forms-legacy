@@ -76,14 +76,14 @@ export class RowFields extends React.Component {
     if (hasEdit) {
       return (
         <ButtonGroup ghost size="small">
-          <IconButton icon="pencil" bStyle="secondary" onClick={this.handleEdit} />
-          <IconButton icon="trash" bStyle="error" onClick={this.handleDelete} />
+          <IconButton span icon="pencil" bStyle="secondary" onClick={this.handleEdit} />
+          <IconButton span icon="trash" bStyle="error" onClick={this.handleDelete} />
         </ButtonGroup>
       )
     } else {
       return (
         <ButtonGroup ghost size="small">
-          <IconButton icon="trash" bStyle="error" onClick={this.handleDelete} />
+          <IconButton span icon="trash" bStyle="error" onClick={this.handleDelete} />
         </ButtonGroup>
       )
     }
