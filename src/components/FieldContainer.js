@@ -2,17 +2,17 @@ import React from 'react'
 
 export class FieldContainer extends React.Component {
   render(){
-    const { id, name, label, hint, horizontal, children, className, style={}, width, noContainer } = this.props
+    const { id, name, label, hint, horizontal, children, className, style={}, width, noContainer, type } = this.props
 
     if (noContainer){
       return (
-        <div style={{width: '100%'}}>
+        <div className={"ac-field-" + type} style={{width: '100%'}}>
           {children}
         </div>
       )
     }
 
-    let classNames = "c-form-element"
+    let classNames = "c-form-element ac-field-" + type
     if (horizontal) classNames += " c-form-element--horizontal"
     if (className)  classNames += " " + className
 

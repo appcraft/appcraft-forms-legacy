@@ -171,21 +171,46 @@ export class TableField extends React.Component {
     this.deleteEntry = this.deleteEntry.bind(this)
     this.editEntry = this.editEntry.bind(this)
     this.onSortEnd = this.onSortEnd.bind(this)
+    this.handlePopupEditSave = this.handlePopupEditSave.bind(this)
+
+    this.editPrev = (e) => {
+      this.setState({
+        currentIndex: this.state.currentIndex-1
+      })
+    }
+    this.editNext = (e) => {
+      this.setState({
+        currentIndex: this.state.currentIndex+1
+      })
+    }
+  }
+
+  static contextTypes = {
+    acForms: React.PropTypes.object
+  }
+
+  handlePopupEditSave(newValue){
+    const { value=[], name, onChange } = this.props
+
+    const newArray = [...value]
+    newArray[this.state.currentIndex] = newValue
+    onChange(name, newArray)
+    this.setState({showEditPopup: false})
   }
   
   updateEntry(idx, fieldName, fieldValue) {
-    const { value=[], data, name, onChange } = this.props
+    const { value=[], name, onChange } = this.props
   
     if (idx >= value.length){
       onChange(name, [...value, {[fieldName]: fieldValue}])
       return
     }
 
-    const newArray = value.map((data, i) => (i == idx) ? {
-      ...data, 
+    const newArray = [...value]
+    newArray[idx] = {
+      ...newArray[idx],
       [fieldName]: fieldValue
-    } : data)
-    console.log("newArray", newArray)
+    }
     onChange(name, newArray)
   }
 
@@ -223,6 +248,7 @@ export class TableField extends React.Component {
   
   render(){
     const { id, fields, visibleFields, value=[], entryLabel="Entry" } = this.props
+    const { showEditPopup, currentIndex } = this.state
 
     const hasEdit = visibleFields && visibleFields.length != fields.length
     const actionWidth = hasEdit ? 90 : 60
@@ -255,8 +281,17 @@ export class TableField extends React.Component {
                              lockToContainerEdges
                               />
         </Table>
-        {hasEdit && <Portal isOpened={this.state.showEditPopup}>
-            <ModalForm onClose={() => this.setState({showEditPopup: false})}/>
+        {hasEdit && <Portal isOpened={showEditPopup}>
+            <ModalForm title={"Entry #" + (currentIndex + 1)}
+                       onPrev={true}
+                       onNext={true}
+                       data={value[currentIndex]}
+                       fields={fields}
+                       fieldTypes={this.context.acForms.fieldTypes}
+                       onPrev={currentIndex > 0 && this.editPrev}
+                       onNext={currentIndex < value.length-1 && this.editNext}
+                       onApply={this.handlePopupEditSave}
+                       onClose={() => this.setState({showEditPopup: false})}/>
           </Portal>
         }
       </FieldContainer>

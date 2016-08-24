@@ -3,7 +3,7 @@ import {render} from 'react-dom'
 
 import { fieldTypes, Form } from '../../src'
 
-import { H1 } from 'react-blazecss'
+import { H1, Container, Nav, NavContent, NavItem } from 'react-blazecss'
 import 'blaze/dist/blaze.min.css'
 import 'blaze/dist/blaze.animations.min.css'
 import 'font-awesome/css/font-awesome.min.css'
@@ -48,13 +48,14 @@ const fields = [
   {name: "country", type: "string", width: "35%"},
 
   {label: "Table field with hidden columns", type: "header"},
-  {name: "table-hidden", label: "Table with edit", type: "table", visibleFields: ["name", "age"], fields: [
+  {name: "table-hidden", label: "Table with edit", type: "table", visibleFields: ["name", "age", "childCount"], fields: [
     {name: "name", label: "Name", type: "string"},
     {name: "age", label: "Age", type: "number"},
     {name: "sex", label: "Sex", type: "choice", options: [
       {label: "Male", value: "male"},
       {label: "Female", value: "female"},
-    ]},
+    ]}, 
+    {name: "childCount", label: "Child Count", type: "computed", template: "{{children.length}}"},
     {name: "children", label: "Children", type: "table", fields: [
       {name: "name", label: "Name", type: "string"},
       {name: "age", label: "Age", type: "number"},
@@ -111,12 +112,20 @@ class Demo extends React.Component {
   render(){
     console.log("data", this.state.data)
     return (
-      <div style={{padding: 24}} className="c-text">
-        <H1 size="xlarge">appcraft-forms Demo</H1>
-        <Form fieldTypes={fieldTypes} 
-              fields={fields}
-              data={this.state.data} 
-              onChange={this.onChange}/>
+      <div className="c-text">
+        <Nav inline shadow="higher" animate position="top" fixed style={{zIndex: 11}}>
+          <Container size="large">
+          {/*<Nav inline shadow="higher" animate position="top" fixed>*/}
+            <NavContent>AppCraft Forms</NavContent>
+            <NavItem right bStyle="primary">github</NavItem>
+          </Container>
+        </Nav>
+        <Container size="large" style={{paddingTop: 60, paddingLeft: 8, paddingRight: 8}}>
+          <Form fieldTypes={fieldTypes} 
+                fields={fields}
+                data={this.state.data} 
+                onChange={this.onChange}/>
+        </Container>
       </div>
     )
   } 

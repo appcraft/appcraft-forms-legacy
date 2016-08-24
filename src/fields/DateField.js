@@ -65,7 +65,7 @@ export class DateField extends Field {
         <div className="c-input-group">
           <MaskedInput id={id} 
                 className="c-field" 
-                guide={false}
+                guide={true}
                 mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
                 onChange={this.onChange}
                 type="text"

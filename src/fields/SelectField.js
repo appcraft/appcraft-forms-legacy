@@ -15,7 +15,7 @@ export class SelectField extends Field {
     
     return (
       <FieldContainer {...this.props}>
-        <select className="c-choice" id={id} value={value} onChange={this.onChange}>
+        <select className="c-choice c-choice--small" id={id} value={value} onChange={this.onChange}>
           <option disabled value="">-- Select Value --</option>
           {options.map(o => <option key={o.value} value={o.value}>{o.label || o.value}</option>)}
         </select>
