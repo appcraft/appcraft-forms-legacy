@@ -79,7 +79,6 @@ export class AddressField extends React.Component {
   }
   
   render(){
-    console.log("render address")
     return (
       <FieldContainer {...this.props}>
           <input className="c-field" ref="autocomplete" type="search" />

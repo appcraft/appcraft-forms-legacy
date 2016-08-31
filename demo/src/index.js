@@ -22,6 +22,7 @@ const fields = [
     {label: "Option 2", value: "2"},
     {label: "Option 3", value: "3"},
   ]},
+  {name: "file", label: "File", type: "file"},
 
   {label: "Complex field types", type: "header"},
   {name: "list", label: "List", type: "list", fields: [

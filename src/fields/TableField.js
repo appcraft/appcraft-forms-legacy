@@ -122,7 +122,6 @@ export class RowFields extends React.Component {
   
   renderFields(){
     const { data={}, fields=[], onChange, prefix="", horizontal } = this.props
-    console.log("fields", fields)
     return fields.map((field, idx) => {
       const { name, label, type } = field
       
@@ -256,7 +255,7 @@ export class TableField extends React.Component {
   handleInsertValues(baseIndex, fieldName, fieldValues){
     const { value=[], name, onChange } = this.props
 
-    console.log("baseIndex", baseIndex)
+    // console.log("baseIndex", baseIndex)
   
     let newArray = [...value]
 
@@ -316,8 +315,6 @@ export class TableField extends React.Component {
     const hasEdit = visibleFields && visibleFields.length != fields.length
     const actionWidth = hasEdit ? 90 : 60
     const rowFields = this.fieldsToRender()
-    
-    console.log("this.state.showEditPopup", this.state.showEditPopup)
 
     return (
       <FieldContainer {...this.props}>

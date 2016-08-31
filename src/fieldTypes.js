@@ -8,6 +8,7 @@ import {
   BooleanField,
   ComputedField,
   DateField,
+  FileField,
   IconField,
   ListField,
   NumberField,
@@ -22,6 +23,7 @@ export const fieldTypes = {
   "tabs": FormTabs,
 
   "string": StringField,
+  "file": FileField,
   "boolean": BooleanField,
   "richtext": RichTextField,
   "number": NumberField,
