@@ -5,7 +5,7 @@ import { FieldContainer } from '../components/FieldContainer'
 export class StringField extends Field {
 
   render(){
-    const { id, name, label, hint, placeholder, value="" } = this.props
+    const { id, name, label, hint, placeholder, onPaste, value="" } = this.props
 
     return (
       <FieldContainer {...this.props}>
@@ -14,6 +14,7 @@ export class StringField extends Field {
               type="text"
               placeholder={placeholder} 
               onChange={this.onChange}
+              onPaste={onPaste}
               value={value} />
         {hint && <div className="c-hint a-hint">{hint}</div>}
       </FieldContainer>

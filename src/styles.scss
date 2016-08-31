@@ -40,3 +40,40 @@
     }
   }
 }
+
+
+.acf-material {
+  .c-form-element .c-label:first-child {
+    padding-bottom: 0;
+  }
+
+  .c-label {
+    padding-bottom: 0;
+    // font-size: 0.85em;
+  }
+
+  .c-field {
+    background-color: transparent;
+    border-radius: 0;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+
+    &:focus {
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      box-shadow: none;
+    }
+  }
+
+  .c-input-group .c-field:first-child {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+
+  .c-input-group .c-field:last-child {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
+}

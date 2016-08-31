@@ -37,6 +37,10 @@ const fields = [
       {label: "Female", value: "female"},
     ]},
   ]},
+  {name: "small_table", label: "Localisations", type: "table", fields: [
+    {name: "name", label: "Name", type: "string"},
+    {name: "comment", label: "Comment", type: "string"},
+  ]},
 
   {name: "address", label: "Full Address", type: "address"},
   {name: "street number", type: "string", width: "30%"},
@@ -120,9 +124,12 @@ class Demo extends React.Component {
             <NavItem right bStyle="primary">github</NavItem>
           </Container>
         </Nav>
-        <Container size="large" style={{paddingTop: 60, paddingLeft: 8, paddingRight: 8}}>
+        <Container size="medium" style={{paddingTop: 60, paddingLeft: 8, paddingRight: 8}}>
           <Form fieldTypes={fieldTypes} 
                 fields={fields}
+                className="xacf-material"
+                style={{fontSize: '0.95em'}}
+                horizontal={false}
                 data={this.state.data} 
                 onChange={this.onChange}/>
         </Container>

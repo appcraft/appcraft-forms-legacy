@@ -18,11 +18,12 @@ export class Form extends React.Component {
   }
 
   render(){
-    var className = "c-form"
+    const { horizontal=true, className="", style={} } = this.props
+    var classNames = "c-form " + className
 
     return (
-      <form className={className} style={{color: "#333", fontSize: '1em'}}>
-        <Fields {...this.props} horizontal/>
+      <form className={classNames} style={{color: "#333", ...style}}>
+        <Fields {...this.props} horizontal={horizontal}/>
       </form>
     )
   }

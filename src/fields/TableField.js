@@ -44,6 +44,42 @@ export class RowFields extends React.Component {
       const { index, onEdit } = this.props
       onEdit(index)
     }
+
+    this.handlePaste = (e, fieldName) => {
+        const { name, onInsertValues } = this.props
+        if (!onInsertValues) return
+
+        window.clipboardData = e.clipboardData; 
+        console.log(clipboardData)
+        const html = e.clipboardData.getData("text/html")
+        if (html){
+          var el = document.createElement( 'html' );
+          el.innerHTML = html;
+
+          const tables = el.getElementsByTagName( 'table' );
+          console.log(tables)
+          window.tables = tables
+          if (tables.length == 1){
+            const table = tables[0]
+            console.log("table", table)
+            const rows = table.getElementsByTagName("tr")
+            const values = []
+            for(let i=0; i<rows.length; i++){
+              const tr = rows.item(i)
+              const tds = tr.getElementsByTagName("td")
+              if (tds.length > 0) values.push(tds[0].textContent)
+            }
+            if (values.length > 0) {
+              onInsertValues(name, fieldName, values)
+              e.preventDefault() // Do custom logic here :) 
+              return
+            }
+          }
+        }
+        // console.log("HTML", e.clipboardData.getData('text/html'))
+        // console.log("TEXT", e.clipboardData.getData('text/plain').split("\t"))
+        // console.log("RTF", e.clipboardData.getData('text/rtf'))
+    }
   }
 
   static contextTypes = {
@@ -111,7 +147,8 @@ export class RowFields extends React.Component {
                       {...field}
                       id={prefix + key}
                       noContainer={true}
-                      onChange={this.updateField} 
+                      onChange={this.updateField}
+                      onPaste={(e) => this.handlePaste(e, name)}
                       value={data[name]} />
         </TD>
       )
@@ -123,7 +160,7 @@ const SortableRowField = SortableElement(props => <RowFields {...props} />);
 
 const SortableTableBody = SortableContainer(class TableFieldBody extends React.Component {
   render(){
-    const { id, fields, value, onChange, onDelete, onEdit, hasEdit } = this.props
+    const { id, fields, value, onChange, onDelete, onEdit, hasEdit, onInsertValues } = this.props
     const rows = value.map((data, idx) => (
       <SortableRowField key={idx} 
                   index={idx} 
@@ -147,7 +184,8 @@ const SortableTableBody = SortableContainer(class TableFieldBody extends React.C
                   isExtra 
                   hasEdit={hasEdit}
                   fields={fields}
-                  onChange={onChange} />
+                  onChange={onChange}
+                  onInsertValues={onInsertValues} />
     )
 
     return (
@@ -168,6 +206,7 @@ export class TableField extends React.Component {
     }
 
     this.updateEntry = this.updateEntry.bind(this)
+    this.handleInsertValues = this.handleInsertValues.bind(this)
     this.deleteEntry = this.deleteEntry.bind(this)
     this.editEntry = this.editEntry.bind(this)
     this.onSortEnd = this.onSortEnd.bind(this)
@@ -211,6 +250,30 @@ export class TableField extends React.Component {
       ...newArray[idx],
       [fieldName]: fieldValue
     }
+    onChange(name, newArray)
+  }
+
+  handleInsertValues(baseIndex, fieldName, fieldValues){
+    const { value=[], name, onChange } = this.props
+
+    console.log("baseIndex", baseIndex)
+  
+    let newArray = [...value]
+
+    fieldValues.forEach((fieldValue, extraIndex) => {
+      const idx = baseIndex + extraIndex
+      // this.updateEntry(idx+extraIndex, fieldName, value)
+
+      if (idx >= newArray.length){
+        newArray.push({[fieldName]: fieldValue})
+      } else {
+        newArray[idx] = {
+          ...newArray[idx],
+          [fieldName]: fieldValue
+        }
+      }
+    })
+
     onChange(name, newArray)
   }
 
@@ -276,6 +339,7 @@ export class TableField extends React.Component {
                              onChange={this.updateEntry}
                              onDelete={this.deleteEntry}
                              onEdit={this.editEntry}
+                             onInsertValues={this.handleInsertValues}
                              useDragHandle
                              lockAxis="y"
                              lockToContainerEdges
