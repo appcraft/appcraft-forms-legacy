@@ -72,8 +72,10 @@ export class FileField extends Field {
   constructor(props){
     super(props)
 
+    const files = props.value || []
+
     this.state = {
-      files: props.value || []
+      files: Array.isArray(files) ? files : [files]
     }
 
     this.onDrop = this.onDrop.bind(this)  
