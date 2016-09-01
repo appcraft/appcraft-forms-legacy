@@ -3,7 +3,7 @@ import React from 'react'
 export class FieldContainer extends React.Component {
   render(){
     const { id, name, label, required, 
-      horizontal, children, error,
+      horizontal, children, error, showLabel=true,
       className, style={}, width, noContainer, type } = this.props
 
     if (noContainer){
@@ -26,8 +26,8 @@ export class FieldContainer extends React.Component {
         paddingRight: !horizontal ? '0.5em' : undefined,
         width  
       }}>
-        <label className={"c-label" + (error ? " c-label--error" : "")} 
-               htmlFor={id}>{label || name || id}{required ? " *" : undefined}</label>
+        {showLabel && <label className={"c-label" + (error ? " c-label--error" : "")} 
+               htmlFor={id}>{label || name || id}{required ? " *" : undefined}</label>}
         <div className="c-label-field-group">
           {children}
         </div>
