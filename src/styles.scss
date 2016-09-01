@@ -5,10 +5,14 @@
   }
 }
 
+.c-label.c-label--error {
+  color: #ef4f52;
+}
+
 .c-file-grid {
   width: 100%;
   overflow: auto;
-  padding: 8px;
+  padding: 0;
 }
 
 .c-file-grid__item {
@@ -21,12 +25,22 @@
   }
 }
 
+.c-file-grid__single {
+  width: 100%;
+  max-width: 200px;
+  padding: 2px;
+}
+
 .c-label {
   color: #777;
 }
 
 .c-label-field-group {
   position: relative;
+}
+
+.c-form-element {
+  vertical-align: top;
 }
 
 .c-form-element.c-form-element--horizontal {
@@ -66,6 +80,15 @@
   .c-label {
     padding-bottom: 0;
     // font-size: 0.85em;
+  }
+
+  .c-form-element.ac-field-computed {
+    .c-field {
+      border-color: transparent;
+      border-left-color: #42a5f5;
+      // border-left-width: 2px; 
+      background-color: rgba(66, 165, 245, 0.1);
+    }
   }
 
   .c-field {

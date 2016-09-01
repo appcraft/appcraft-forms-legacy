@@ -28,9 +28,20 @@ const rejectStyle = {
 
 class FileList extends Field {
   render(){
-    const { files, onReorder, onItemClick, selected, disableReorder=false } = this.props
+    const { files, onReorder, onItemClick, selected, disableReorder=false, multiple, showInfo } = this.props
     // console.log("files", files)
         // lock='horizontal'
+
+    if (!multiple && files.length > 0){
+      return (
+        <div className="c-file-grid">
+          <div className="c-file-grid__single">
+            <FilePreview item={files[0]} />
+          </div>
+        </div>
+      )
+    }
+
     return (
       <Reorder
         itemKey='id'
@@ -38,12 +49,13 @@ class FileList extends Field {
         list={files}
         template={FilePreview}
         callback={onReorder}
+        sharedProps={{showInfo}}
         listClass='c-file-grid'
-        itemClass='c-file-grid__item'
+        itemClass={multiple ? 'c-file-grid__item' : 'c-file-grid__single'}
         itemClicked={onItemClick}
         selected={selected}
         selectedKey='id'
-        disableReorder={disableReorder}/>
+        disableReorder={disableReorder || !multiple}/>
     )
     // return (
     //   <div>
@@ -69,19 +81,27 @@ export class FileField extends Field {
   }
 
   onProgress(file, res){
-    // console.log("onProgress", file)
-    if (res){
+    if (res){ // Request finished !!
       console.log("res", res)
       const localId = file.id
       const newFile = {
-        ...file,
         ...res
       }
+
       // Finished !!!
-      this.setState({
-        files: this.state.files.map(f => (
-          localId == f.id ? newFile : f 
-        ))
+      const files = this.state.files.map(f => (
+        localId == f.id ? newFile : f 
+      ))
+      this.setState({ files}, () => {
+        const { name, onChange, multiple } = this.props
+        // Report finished uploads
+        const finishedFiles = files.filter(f => !f.file)
+        console.log("finishedFiles", finishedFiles)
+        if (multiple){
+          onChange(name, finishedFiles)
+        } else if(finishedFiles.length > 0) {
+          onChange(name, finishedFiles[0])
+        }
       })
     } else {
       this.setState({
@@ -93,12 +113,20 @@ export class FileField extends Field {
   }
 
   onDrop(files) {
+    const { multiple=false } = this.props
     console.log('onDrop', files);
     console.log("UploadManager.instance()", UploadManager.instance())
-    const fileUploads = UploadManager.instance().addFiles(files, this.onProgress)
-    this.setState({
-      files: [...this.state.files, ...fileUploads]
-    })
+    if (multiple){ // Enqueue all new files and append to current ones
+      const fileUploads = UploadManager.instance().addFiles(files, this.onProgress)
+      this.setState({
+        files: [...this.state.files, ...fileUploads]
+      })
+    } else { // Single file upload, just 1, sorry
+      const fileUpload = UploadManager.instance().addFile(files[0], this.onProgress)
+      this.setState({
+        files: [fileUpload]
+      })
+    }
 
     // const progress = files.map(file => ({
     //   id: guid(),
@@ -136,25 +164,25 @@ export class FileField extends Field {
 
 
   render(){
-    const { id, name, label, hint, placeholder, onPaste, value=[] } = this.props
+    const { id, multiple, height=100 } = this.props
 
-    const text = "Drop file here"
+    const text = multiple ? "Drop files here" : "Drop file here"
     const files = this.state.files
+                    // accept="image/*"
     return (
       <FieldContainer {...this.props}>
-        <div style={{minHeight: 100, width: '100%'}}>
+        <div style={{minHeight: height, width: '100%'}}>
           <Dropzone onDrop={this.onDrop} 
                     multiple={true}
                     inputProps={{
                       id
                     }} 
-                    accept="image/*"
-                    style={dropzoneStyle}
+                    style={{...dropzoneStyle, minHeight: height}}
                     activeStyle={activeStyle}
                     rejectStyle={rejectStyle}
                     >
             {files.length > 0 
-                ? <FileList files={files} />
+                ? <FileList files={files} multiple={multiple} />
                 : <div style={{textAlign: 'center'}}><Center>{text}</Center></div>
             }
           </Dropzone>

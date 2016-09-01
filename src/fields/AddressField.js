@@ -61,8 +61,8 @@ export class AddressField extends React.Component {
       const script = document.createElement('script') 
       script.type = "text/javascript"
       script.async = true
-      // script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDoiPcdpyW_0MtTEJF7O-T4m9ksQrYLRt0&signed_in=true&libraries=places"
-      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBH1h0_cKZialjE-ttuH8ZfgTwm106JM3Q&signed_in=true&libraries=places"
+      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDoiPcdpyW_0MtTEJF7O-T4m9ksQrYLRt0&signed_in=true&libraries=places"
+      // script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBH1h0_cKZialjE-ttuH8ZfgTwm106JM3Q&signed_in=true&libraries=places"
       script.onload = () => {
         if (this._isMounted) this.initGoogleMaps()
       }

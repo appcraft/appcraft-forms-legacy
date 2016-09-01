@@ -31,8 +31,8 @@ export class ComputedField extends React.Component {
     
     return (
       <FieldContainer {...this.props}>
-        <div className="c-field" style={{borderColor: '#CCC', lineHeight: 'normal'}}>
-          {__text ? __text : <span>&nbsp;</span>}
+        <div className="c-field" style={{lineHeight: 'normal'}}>
+          {(__text && __text != ' ') ? __text : <span>&nbsp;</span>}
         </div>
       </FieldContainer>
     )

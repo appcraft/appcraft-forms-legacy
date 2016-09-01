@@ -40,7 +40,8 @@ export class Fields extends React.Component {
   }
   
   renderFields(){
-    const { data, fields=[], onChange, prefix="", horizontal } = this.props
+    const { data, errors, fields=[], onChange, prefix="", horizontal } = this.props
+
     return fields.map((field, idx) => {
       const { name, label, type } = field
       
@@ -48,18 +49,21 @@ export class Fields extends React.Component {
       
       const Component = getFieldComponent(this.context.acForms.fieldTypes, type)      
       const key = name || field.label || (type + "-" + (idx+1))
-      if (type === "computed" || type === "length" || type === "tabs"){
+      if (type === "computed" || type === "length" || type === "tabs" || type === "grid" || type === "section"){
         return <Component key={"field-" + key} 
                           horizontal={horizontal}
                           {...field}
                           id={prefix + name}
-                          data={data} />
+                          onChange={onChange} 
+                          data={data}
+                          errors={errors} />
       }
       return <Component key={"field-" + key} 
                         horizontal={horizontal}
                         {...field}
                         id={prefix + key}
                         onChange={this.updateField} 
+                        error={errors && errors[field.name]}
                         value={data[name]} />
     })
   }

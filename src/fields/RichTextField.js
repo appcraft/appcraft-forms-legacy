@@ -42,6 +42,9 @@ export class RichTextField extends Field {
           <RichTextEditor
             className="c-field"
             editorClassName="c-text"
+            customStyleMap={{
+              color: 'red'
+            }}
             value={this.state.value}
             onChange={this.onChange}
           />

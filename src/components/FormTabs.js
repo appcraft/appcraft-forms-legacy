@@ -2,11 +2,11 @@ import React from 'react'
 import { Tab, Tabs } from 'react-blazecss'
 import { Fields } from '../fields/Fields'
 
-export const FormTabs = ({data, tabs}) => (
+export const FormTabs = ({data, tabs, onChange}) => (
   <Tabs defaultActiveKey={0} animate bStyle="primary">
     {tabs.map((tab, idx) => (
       <Tab key={idx} eventKey={idx} title={tab.title}>
-        <Fields fields={tab.fields} data={data} horizontal />
+        <Fields fields={tab.fields} data={data} horizontal onChange={onChange} />
       </Tab>
     ))}
   </Tabs>

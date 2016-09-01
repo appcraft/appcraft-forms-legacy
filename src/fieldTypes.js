@@ -1,6 +1,8 @@
 import {
   FormHeader,
   FormTabs,
+  FormGrid,
+  FormSection,
 } from './components'
 
 import { 
@@ -21,6 +23,8 @@ import {
 export const fieldTypes = {
   "header": FormHeader,
   "tabs": FormTabs,
+  "grid": FormGrid,
+  "section": FormSection,
 
   "string": StringField,
   "file": FileField,

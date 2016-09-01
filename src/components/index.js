@@ -1,5 +1,7 @@
 export * from './FieldContainer'
+export * from './FormGrid'
 export * from './FormHeader'
+export * from './FormSection'
 export * from './FormTabs'
 export * from './Icon'
 export * from './IconButton'
