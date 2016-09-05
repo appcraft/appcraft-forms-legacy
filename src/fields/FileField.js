@@ -28,7 +28,7 @@ const rejectStyle = {
 
 class FileList extends Field {
   render(){
-    const { files, onReorder, onItemClick, selected, disableReorder=false, multiple, showInfo } = this.props
+    const { files, onReorder, onItemClick, selected, disableReorder=false, multiple, showInfo, square, ratio, gridSize=3 } = this.props
     // console.log("files", files)
         // lock='horizontal'
 
@@ -36,7 +36,7 @@ class FileList extends Field {
       return (
         <div className="c-file-grid">
           <div className="c-file-grid__single">
-            <FilePreview item={files[0]} />
+            <FilePreview item={files[0]} square={square} ratio={ratio} />
           </div>
         </div>
       )
@@ -47,11 +47,11 @@ class FileList extends Field {
         itemKey='id'
         holdTime={0}
         list={files}
-        template={FilePreview}
+        template={(props) => <FilePreview square={square} ratio={ratio} {...props} />}
         callback={onReorder}
         sharedProps={{showInfo}}
         listClass='c-file-grid'
-        itemClass={multiple ? 'c-file-grid__item' : 'c-file-grid__single'}
+        itemClass={multiple ? ('c-file-grid__item c-file-grid__item--1-' + gridSize) : 'c-file-grid__single'}
         itemClicked={onItemClick}
         selected={selected}
         selectedKey='id'
@@ -84,7 +84,7 @@ export class FileField extends Field {
 
   onProgress(file, res){
     if (res){ // Request finished !!
-      console.log("res", res)
+      // console.log("res", res)
       const localId = file.id
       const newFile = {
         ...res
@@ -116,8 +116,8 @@ export class FileField extends Field {
 
   onDrop(files) {
     const { multiple=false } = this.props
-    console.log('onDrop', files);
-    console.log("UploadManager.instance()", UploadManager.instance())
+    // console.log('onDrop', files);
+    // console.log("UploadManager.instance()", UploadManager.instance())
     if (multiple){ // Enqueue all new files and append to current ones
       const fileUploads = UploadManager.instance().addFiles(files, this.onProgress)
       this.setState({
@@ -166,10 +166,11 @@ export class FileField extends Field {
 
 
   render(){
-    const { id, multiple, height=100 } = this.props
+    const { id, multiple, height=100, square, ratio, gridSize } = this.props
 
     const text = multiple ? "Drop files here" : "Drop file here"
     const files = this.state.files
+    console.log("ratio", ratio)
                     // accept="image/*"
     return (
       <FieldContainer {...this.props}>
@@ -184,7 +185,7 @@ export class FileField extends Field {
                     rejectStyle={rejectStyle}
                     >
             {files.length > 0 
-                ? <FileList files={files} multiple={multiple} />
+                ? <FileList files={files} multiple={multiple} square={square} ratio={ratio} gridSize={gridSize}/>
                 : <div style={{textAlign: 'center'}}><Center>{text}</Center></div>
             }
           </Dropzone>

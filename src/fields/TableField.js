@@ -131,7 +131,7 @@ export class RowFields extends React.Component {
       const Component = getFieldComponent(this.context.acForms.fieldTypes, type)      
       if (type === "computed" || type === "length" || type === "tabs"){
         return (
-          <TD key={"field-" + key}>
+          <TD key={"field-" + key} style={{width: field.width, maxWidth: field.width}}>
             <Component  horizontal={horizontal}
                         {...field}
                         id={prefix + name}
@@ -141,7 +141,7 @@ export class RowFields extends React.Component {
         )
       }
       return (
-        <TD key={"field-" + key} >
+        <TD key={"field-" + key} style={{width: field.width, maxWidth: field.width}}>
           <Component horizontal={horizontal}
                       {...field}
                       id={prefix + key}
@@ -309,7 +309,7 @@ export class TableField extends React.Component {
   }  
   
   render(){
-    const { id, fields, visibleFields, value=[], entryLabel="Entry" } = this.props
+    const { name, id, fields, visibleFields, value=[], entryLabel="Entry" } = this.props
     const { showEditPopup, currentIndex } = this.state
 
     const hasEdit = visibleFields && visibleFields.length != fields.length
@@ -318,12 +318,12 @@ export class TableField extends React.Component {
 
     return (
       <FieldContainer {...this.props}>
-        <Table striped style={{width: '100%', border: '1px solid #CCC'}}>
+        <Table striped style={{width: '100%', border: '1px solid #CCC', fontSize: '0.9em'}}>
           <THead>
             <TR heading>
-              <TH style={{width: 90, maxWidth: 90, textAlign: 'right'}}>#</TH>
+              <TH style={{width: '6em', maxWidth: '6em', textAlign: 'right'}}>#</TH>
               {rowFields.map((field, idx) => (
-                <TH key={idx+1} style={{width: field.width}}>{field.label}</TH>
+                <TH key={idx+1} style={{width: field.width, maxWidth: field.width}}>{field.label}</TH>
               ))}
               <TH style={{width: actionWidth, maxWidth: actionWidth}} />
             </TR>

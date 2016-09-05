@@ -13,7 +13,9 @@ import {
   FileField,
   IconField,
   ListField,
+  MultiSelectField,
   NumberField,
+  RefField,
   RichTextField,
   SelectField,
   StringField,
@@ -36,9 +38,11 @@ export const fieldTypes = {
   "computed": ComputedField,
   "icon": IconField,
   "address": AddressField,
+  "multiselect": MultiSelectField,
 
   "list": ListField,
   "table": TableField,
+  "ref": RefField,
   
   // "bool": BoolField,
   // "integer": NumberInputField,

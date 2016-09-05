@@ -8,7 +8,7 @@ import 'blaze/dist/blaze.min.css'
 import 'blaze/dist/blaze.animations.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 
-const fields = [
+const fields2 = [
   {label: "Classic field types", type: "header"},
   {name: "string", label: "String", type: "string"},
   {name: "string_hint", label: "String with hint", type: "string", hint: "String hint is displayed when focused"},
@@ -91,6 +91,32 @@ const fields = [
         ]},
       ]},
     ]},
+  ]},
+]
+
+
+const fields = [
+  {label: "Edition", type: "header"},
+  {name: "name", label: "Nom", type: "string", required: true},
+  {type: "grid", columns: [
+    { fixedWidth: 200, fields: [
+      {name: "avatar", label: "Photo principale", type: "file", width: 190, height: 180, showInfo: false},
+    ]},
+    { fields: [
+      {name: "competences", label: "Compétences", type: "string"},
+      {name: "languages", label: "Langues", type: "table", showLabel: false, fields: [
+        {name: "lang", label: "Langue", type: "string"},
+      ]},
+    ]}
+  ]},
+
+  { type: "section", title: "Portfolio", fields: [
+    {name: "portfolio", label: "Portfolio", showLabel: "false", type: "file", multiple: true},
+  ]},
+
+  { type: "section", title: "Vidéos", fields: [
+    {name: "youtube", label: "Youtube", type: "string", width: "50%"},
+    {name: "viemo", label: "Vimeo", type: "string", width: "50%"},
   ]},
 ]
 

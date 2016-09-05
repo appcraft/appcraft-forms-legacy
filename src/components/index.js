@@ -1,4 +1,5 @@
 export * from './FieldContainer'
+export * from './Flag'
 export * from './FormGrid'
 export * from './FormHeader'
 export * from './FormSection'
