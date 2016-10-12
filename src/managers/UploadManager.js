@@ -1,6 +1,6 @@
 import randomId from '../utils/randomId'
 
-const defaultHost = "http://localhost:8080/api/files"
+const defaultHost = REST_API + "/api/files"
 import request from 'superagent'
 
 let singleton = null

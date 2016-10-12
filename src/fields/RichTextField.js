@@ -10,7 +10,7 @@ export class RichTextField extends Field {
     super(props)
 
     this.state = {
-      value: RichTextEditor.createEmptyValue()
+      value: RichTextEditor.createValueFromString(props.value || "", "html")
     }
   }
   

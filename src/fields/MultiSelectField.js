@@ -15,7 +15,7 @@ export class MultiSelectField extends React.Component {
   }
   
   render(){
-    const {name, value=[], onChange, options, multiple, optionRenderer=defaultRenderer} = this.props
+    const {name, value, onChange, options, multiple, optionRenderer=defaultRenderer} = this.props
           // valueRenderer={v => <div>{v.label}</div>}
           // optionRenderer={v => (
           //   <div>{v.label}</div>
@@ -25,7 +25,7 @@ export class MultiSelectField extends React.Component {
         <Select
           className=""
           name={name}
-          value={value}
+          value={value || (multiple ? [] : undefined)}
           options={options}
           clearable={false}
           multi={multiple}

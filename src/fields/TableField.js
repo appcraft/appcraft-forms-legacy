@@ -95,9 +95,10 @@ export class RowFields extends React.Component {
     const { index, isExtra, fields, hasEdit } = this.props
     const width = hasEdit ? 90 : 60
     // const hasEdit = visibleFields && (visibleFields.length != fields.length)
+    // style={{opacity: (isExtra ? 0.7 : undefined)}}
     return (
-      <TR style={{opacity: (isExtra ? 0.5 : undefined)}} >
-        <TD style={{textAlign: 'right', paddingLeft: 4, width: 90, maxWidth: 90, paddingTop: '0.75em'}}>
+      <TR  >
+        <TD style={{textAlign: 'right', paddingLeft: 4, width: '7em', maxWidth: '7em', paddingTop: '0.75em'}}>
           {isExtra ? '' : <span style={{width: '100%'}}><DragHandle /> {index+1}</span>}
         </TD>
         {this.renderFields()}
@@ -321,7 +322,7 @@ export class TableField extends React.Component {
         <Table striped style={{width: '100%', border: '1px solid #CCC', fontSize: '0.9em'}}>
           <THead>
             <TR heading>
-              <TH style={{width: '6em', maxWidth: '6em', textAlign: 'right'}}>#</TH>
+              <TH style={{width: '7em', maxWidth: '7em', textAlign: 'right'}}>#</TH>
               {rowFields.map((field, idx) => (
                 <TH key={idx+1} style={{width: field.width, maxWidth: field.width}}>{field.label}</TH>
               ))}

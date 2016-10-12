@@ -113,6 +113,8 @@
     border-top-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
+    box-shadow: none;
+    height: initial;
 
     &:focus {
       border-top-color: transparent;
@@ -133,11 +135,20 @@
   }
 
   .Select-control {
+    background-color: transparent;
     border-radius: 0;
     border-top-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
     border-bottom-color: #adadad;
+  }
+
+  .Select .Select-aria-only {
+    display: none;
+  }
+
+  .Select-menu-outer {
+    z-index: 100;
   }
 
   .is-focused:not(.is-open)>.Select-control {
@@ -146,5 +157,9 @@
     border-right-color: transparent;
     border-bottom-color: #42a5f5;
     box-shadow: none;
+  }
+
+  .c-input-group .c-field {
+    height: initial;
   }
 }

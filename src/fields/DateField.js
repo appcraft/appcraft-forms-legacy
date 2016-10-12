@@ -44,11 +44,11 @@ export class DateField extends Field {
     try {
       const date = moment(value, "DD/MM/YYYY").toDate();
       if ( isNaN( date.getTime() ) ) {
-        return false
+        return new Date();
       }
       return date
     } catch(e){
-      return false;
+      return new Date();
     }
   }
 

@@ -2,7 +2,9 @@ import React from 'react'
 import { humanFileSize } from '../utils'
 import { Icon } from './Icon'
 
-const host = "http://localhost:8080/api/files"
+
+// const baseUrl = "http://images.cyrillejoubert-talents.com/api/files"
+const host = REST_API + "/api/files"
 
 
 const RatioImage = ({src, onClick, imageStyle={}, children, ratio=1}) => {
@@ -27,19 +29,28 @@ const RatioThumbnail = ({fileId, width=250, ratio=1}) => {
   return <RatioImage src={`${host}/${fileId}/thumbnail/?w=${width}&h=${height}&auto`} ratio={ratio} />
 }
 
-export const FilePreview = ({item, showInfo, square=true, ratio}) => {
+export const FilePreview = ({item, showInfo, square=true, ratio, onRemove}) => {
   const spanStyle = {
     whiteSpace: "nowrap",
     overflow: "hidden"
   }
   if (!item.file){
     return (
-      <div style={{position: 'relative'}}>
+      <div style={{position: 'relative', backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
         {square 
           ? <RatioImage src={`${host}/${item.id}`} />
           : (ratio
             ? <RatioThumbnail fileId={item.id} ratio={ratio} />
-            : <img src={`${host}/${item.id}/thumbnail/?w=250`} style={{width: '100%'}} />)}
+            : <img src={`${host}/${item.id}/thumbnail/?w=250`} style={{width: '100%'}} />)}   
+         <span type="button" 
+               className="c-button c-button--close"
+               style={{position: 'absolute', top: 0, right: 0, color: 'white', padding: '4px 8px 8px 8px'}}
+               onMouseDown={(e) => e.stopPropagation()} 
+               onClick={(e) => {
+                 e.preventDefault()
+                 e.stopPropagation()
+                 onRemove(item)
+                } }>×</span>
       </div>
     )
   } else {
