@@ -43,12 +43,12 @@ export class Fields extends React.Component {
     const { data, errors, fields=[], onChange, prefix="", horizontal } = this.props
 
     return fields.map((field, idx) => {
-      const { name, label, type } = field
+      const { name, label, type, component } = field
       
       // if (type == "componentList") return undefined // TODO: remove
       
-      const Component = getFieldComponent(this.context.acForms.fieldTypes, type)      
-      const key = name || field.label || (type + "-" + (idx+1))
+      const Component = component || getFieldComponent(this.context.acForms.fieldTypes, type)      
+      const key = name || label || (type + "-" + (idx+1))
       if (type === "computed" || type === "length" || type === "tabs" || type === "grid" || type === "section"){
         return <Component key={"field-" + key} 
                           horizontal={horizontal}

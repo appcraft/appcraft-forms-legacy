@@ -1,7 +1,7 @@
 import * as React from "react";
 
 require('./flags.css')
-const forOwn = require('lodash/forOwn')
+// const forOwn = require('lodash/forOwn')
 
 // isoCountries from https://gist.github.com/maephisto/9228207
 
@@ -259,9 +259,11 @@ const countryToCode = {
   'england': 'gb',
   'en': 'gb',
 }
-forOwn(isoCountries, (value, key) => {
-  countryToCode[value.toLowerCase()] = key.toLowerCase()
-})
+for(var key in isoCountries){
+  if (isoCountries.hasOwnProperty(key)){
+    countryToCode[isoCountries[key].toLowerCase()] = key.toLowerCase()
+  }
+}
 
 function countryCodeFor(name){
   if (name.toUpperCase() in isoCountries) return name.toLowerCase()

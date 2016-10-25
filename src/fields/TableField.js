@@ -114,7 +114,7 @@ export class RowFields extends React.Component {
     if (isExtra) return null
     
     return (
-      <ButtonGroup ghost size="small">
+      <ButtonGroup ghost size="small" style={{height: '2em'}}>
         {hasEdit && <IconButton span icon="pencil" bStyle="secondary" onClick={this.handleEdit} />}
         <IconButton span icon="trash" bStyle="error" onClick={this.handleDelete} />
       </ButtonGroup>
@@ -124,12 +124,12 @@ export class RowFields extends React.Component {
   renderFields(){
     const { data={}, fields=[], onChange, prefix="", horizontal } = this.props
     return fields.map((field, idx) => {
-      const { name, label, type } = field
+      const { name, label, type, component } = field
       
       // if (type == "componentList") return undefined // TODO: remove
       
       const key = name || label || (type + "-" + (idx+1))
-      const Component = getFieldComponent(this.context.acForms.fieldTypes, type)      
+      const Component = component || getFieldComponent(this.context.acForms.fieldTypes, type)      
       if (type === "computed" || type === "length" || type === "tabs"){
         return (
           <TD key={"field-" + key} style={{width: field.width, maxWidth: field.width}}>

@@ -23,7 +23,8 @@ export class RefField extends React.Component {
     console.log("createIfNeeded", v)
     const { host=REST_API, table } = this.props
     if (v.id === v.label){
-      fetch(`${host}/api/documents`, {
+      const apikKey = window['AC_API_KEY'] || ''
+      fetch(`${host}/api/documents?apiKey=${apikKey}`, {
         method: 'POST', 
         mode: 'cors', 
         redirect: 'follow',
@@ -82,7 +83,8 @@ export class RefField extends React.Component {
           labelKey="label"
           loadOptions={(input) => {
             console.log("loadOptions", input)
-            return fetch(`${host}/api/documents/${table}/_autocomplete?q=${input}`)
+            const apikKey = window['AC_API_KEY'] || ''
+            return fetch(`${host}/api/documents/${table}/_autocomplete?q=${input}&apiKey=${apikKey}`)
               .then(res => res.json())
               .then(options => ({ options }))
           }}

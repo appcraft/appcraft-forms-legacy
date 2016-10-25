@@ -30,7 +30,8 @@ export default class UploadManager {
       state: 'uploading'
     }
     const attachement = file.file
-    return request.post(defaultHost)
+    const apikKey = window['AC_API_KEY'] || ''
+    return request.post(defaultHost + "?apiKey=" + apikKey)
       .field('id', file.id)
       .field('filename', attachement.name)
       .attach('file', attachement, attachement.name)

@@ -18,7 +18,7 @@ export class BooleanField extends React.Component {
   }
 
   render(){
-    const { subtype, id, name, label, hint, bStyle, value="" } = this.props
+    const { subtype, id, hint, bStyle, value="" } = this.props
 
     return (
       <FieldContainer {...this.props}>
@@ -28,7 +28,7 @@ export class BooleanField extends React.Component {
                 type="checkbox"
                 style={{paddingTop: 8}}
                 onChange={this.onChange}
-                value={value}/>&nbsp;{hint}
+                checked={value}/>&nbsp;{hint}
         </label>
       ) : (
         <Toggle id={id}  
@@ -36,7 +36,7 @@ export class BooleanField extends React.Component {
               bStyle={bStyle}
               style={{paddingTop: 8}}
               onChange={this.onChange}
-              value={value}>&nbsp;{hint}</Toggle>
+              checked={value}>&nbsp;{hint}</Toggle>
       )}
       </FieldContainer>
     )
