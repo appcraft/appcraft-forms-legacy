@@ -33,6 +33,21 @@ export class ListField extends React.Component {
   }
   
   entryLabelFor(data){
+    const { entryLabelField } = this.props
+    if (entryLabelField){
+      if (data && data[entryLabelField] != undefined){
+        const value = data[entryLabelField]
+        if (value && value.label){
+          return " - " + value.label
+        } else if (Array.isArray(value)){
+          if (value.length === 0) return ""
+          else return " - " + value[0].label
+        } else {
+          return " - " + value
+        }
+      }
+      return ""
+    }
     const label = data.label || data.title || data.name
     if (label) return " - " + label
     return ""

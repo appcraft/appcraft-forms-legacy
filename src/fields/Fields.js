@@ -15,6 +15,7 @@ export class Fields extends React.Component {
     
     this.updateField = (fieldName, value) => {
       const { name, onChange } = this.props
+      console.log("fields update", name, fieldName, value)
       onChange(name, fieldName, value)
     }
   }
@@ -42,8 +43,11 @@ export class Fields extends React.Component {
   renderFields(){
     const { data, errors, fields=[], onChange, prefix="", horizontal } = this.props
 
+
     return fields.map((field, idx) => {
       const { name, label, type, component } = field
+
+      // if (name) console.log("render field", name, "with value", data[name])
       
       // if (type == "componentList") return undefined // TODO: remove
       

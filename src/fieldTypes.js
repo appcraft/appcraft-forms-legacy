@@ -3,6 +3,7 @@ import {
   FormTabs,
   FormGrid,
   FormSection,
+  FormSectionToggle
 } from './components'
 
 import { 
@@ -27,6 +28,7 @@ export const fieldTypes = {
   "tabs": FormTabs,
   "grid": FormGrid,
   "section": FormSection,
+  "section_toggle": FormSectionToggle,
 
   "string": StringField,
   "file": FileField,

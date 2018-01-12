@@ -21,7 +21,7 @@ function getFieldComponent(fieldTypes, type){
 }
 
 const DragHandle = SortableHandle(() => (
-  <Icon name="bars" style={{color: '#BBB', float: 'left', padding: 4, cursor: 'move'}} />
+  <Icon name="bars" style={{color: '#BBB', float: 'left', padding: 4, cursor: 'move', userSelect: 'none'}} />
 ));
 
 export class RowFields extends React.Component {
@@ -36,13 +36,13 @@ export class RowFields extends React.Component {
     }
     this.handleDelete = (e) => {
       e.preventDefault()
-      const { index, onDelete } = this.props
-      onDelete(index)
+      const { rowIndex, onDelete } = this.props
+      onDelete(rowIndex)
     }
     this.handleEdit = (e) => {
       e.preventDefault()
-      const { index, onEdit } = this.props
-      onEdit(index)
+      const { rowIndex, onEdit } = this.props
+      onEdit(rowIndex)
     }
 
     this.handlePaste = (e, fieldName) => {
@@ -92,14 +92,15 @@ export class RowFields extends React.Component {
   
   render(){
 
-    const { index, isExtra, fields, hasEdit } = this.props
+    const { rowIndex, isExtra, fields, hasEdit } = this.props
+    // console.log("index", index)
     const width = hasEdit ? 90 : 60
     // const hasEdit = visibleFields && (visibleFields.length != fields.length)
     // style={{opacity: (isExtra ? 0.7 : undefined)}}
     return (
       <TR  >
         <TD style={{textAlign: 'right', paddingLeft: 4, width: '7em', maxWidth: '7em', paddingTop: '0.75em'}}>
-          {isExtra ? '' : <span style={{width: '100%'}}><DragHandle /> {index+1}</span>}
+          {isExtra ? '' : <span style={{width: '100%'}}><DragHandle /> {rowIndex+1}</span>}
         </TD>
         {this.renderFields()}
         <TD style={{textAlign: 'right', width, maxWidth: width}}>
@@ -156,14 +157,19 @@ export class RowFields extends React.Component {
   }
 }
 
-const SortableRowField = SortableElement(props => <RowFields {...props} />);
+const SortableRowField = SortableElement(RowFields);
 
 const SortableTableBody = SortableContainer(class TableFieldBody extends React.Component {
   render(){
-    const { id, fields, value, onChange, onDelete, onEdit, hasEdit, onInsertValues } = this.props
+    const { id, fields, value, onChange, onDelete, onEdit, hasEdit, onInsertValues, addToTop=false } = this.props
+
+
+
+
     const rows = value.map((data, idx) => (
       <SortableRowField key={idx} 
                   index={idx} 
+                  rowIndex={idx} 
                   name={idx} 
                   prefix={`${id}[${idx}].`}
                   fields={fields} 
@@ -173,12 +179,29 @@ const SortableTableBody = SortableContainer(class TableFieldBody extends React.C
                   onDelete={onDelete}
                   onEdit={onEdit}  />
     ))
-    
+        
+    // Extra greyed out one to add rows
+    /*if (addToTop){
+      rows.unshift(
+        <SortableRowField key={-1} 
+                    disabled={true}
+                    index={-1}
+                    name={-1}
+                    prefix={`${id}[${value.length}].`}
+                    isExtra 
+                    hasEdit={hasEdit}
+                    fields={fields}
+                    onChange={onChange}
+                    onInsertValues={onInsertValues} />
+      )
+    }*/
+
     // Extra greyed out one to add rows
     rows.push(
       <SortableRowField key={value.length} 
                   disabled={true}
                   index={value.length}
+                  rowIndex={value.length}
                   name={value.length}
                   prefix={`${id}[${value.length}].`}
                   isExtra 
@@ -256,7 +279,7 @@ export class TableField extends React.Component {
   handleInsertValues(baseIndex, fieldName, fieldValues){
     const { value=[], name, onChange } = this.props
 
-    // console.log("baseIndex", baseIndex)
+    console.log("baseIndex", baseIndex)
   
     let newArray = [...value]
 
@@ -295,6 +318,7 @@ export class TableField extends React.Component {
 
   onSortEnd({oldIndex, newIndex}) {
       const {value, name, onChange} = this.props;
+      console.log("move", oldIndex, newIndex)
       onChange(name, arrayMove(value, oldIndex, newIndex))
   }
 
@@ -310,7 +334,7 @@ export class TableField extends React.Component {
   }  
   
   render(){
-    const { name, id, fields, visibleFields, value=[], entryLabel="Entry" } = this.props
+    const { name, id, fields, visibleFields, value=[], entryLabel="Entry", addToTop } = this.props
     const { showEditPopup, currentIndex } = this.state
 
     const hasEdit = visibleFields && visibleFields.length != fields.length
@@ -334,6 +358,7 @@ export class TableField extends React.Component {
                              onSortEnd={this.onSortEnd}
                              hasEdit={hasEdit} 
                              value={value}
+                             addToTop={addToTop}
                              onChange={this.updateEntry}
                              onDelete={this.deleteEntry}
                              onEdit={this.editEntry}
